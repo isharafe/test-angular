@@ -21,9 +21,14 @@ export class EmployeeService {
 
     loadEmployees() : Observable<Employee[]> {
       const url = `${this.employeeUriPrefix}`;
-      return new Observable((observable: Observer<Employee[]>)=>{
-        observable.next([{eid: 1, name: "abcd"}]);
-      });
-      // return this.httpService.callServer(url, HttpMethods.GET);
+      // return new Observable((observable: Observer<Employee[]>)=>{
+      //   observable.next([{eid: 1, name: "abcd"}]);
+      // });
+      return this.httpService.callServer(url, HttpMethods.GET);
+    }
+
+    save(employee: Employee) : Observable<Employee> {
+      const url = `${this.employeeUriPrefix}`;
+      return this.httpService.callServer(url, HttpMethods.POST, employee);
     }
 }

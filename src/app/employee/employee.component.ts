@@ -7,45 +7,60 @@ import { EmployeeService } from '../service/employee.service';
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.css']
+  styleUrls: ['./employee.component.css'],
 })
 export class EmployeeComponent implements OnInit {
-
   employee!: Employee;
   formGroup!: FormGroup;
 
   constructor(
     private employeeService: EmployeeService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(()=>{
-      const empId = this.route.snapshot.paramMap.get("id");
+    this.route.paramMap.subscribe(() => {
+      const empId = this.route.snapshot.paramMap.get('id');
       this.loadEmployee(empId);
     });
 
     this.formGroup = this.formBuilder.group({
       employee: this.formBuilder.group({
         empId: ['', Validators.required],
-        name: ['', Validators.required]
-      })
+        name: ['', Validators.required],
+      }),
     });
   }
 
-  loadEmployee(param: string | null) : void {
-    if(!param || param=='new') {
+  loadEmployee(param: string | null): void {
+    if (!param || param == 'new') {
       this.employee = {};
     } else {
       const empId = +param;
-      this.employeeService.loadEmployee(empId).subscribe(emp=>{
+      this.employeeService.loadEmployee(empId).subscribe((emp) => {
         this.employee = emp;
       });
     }
   }
 
-  saveEmployee() : void {
-    console.log(this.formGroup);
+  set empId(a:any){}
+  get empId() {
+    return this.formGroup.get('employee.empId');
+  }
+  set name(a:any){}
+  get name() {
+    return this.formGroup.get('employee.name');
   }
 
+  saveEmployee(): void {
+    if(this.formGroup.invalid) {
+      this.formGroup.markAllAsTouched();
+      return;
+    }
+
+    this.employeeService.save(this.employee).subscribe(obs=>{
+      this.employee = obs;
+    });
+  }
 }
