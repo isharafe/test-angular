@@ -14,7 +14,7 @@ export class EmployeeService {
     private httpService: HttpService,
     ) { }
 
-    loadEmployee(empId: number) : Observable<Employee> {
+    loadEmployee(empId: string) : Observable<Employee> {
       const url = `${this.employeeUriPrefix}/${empId}`;
       return this.httpService.callServer(url, HttpMethods.GET);
     }
@@ -22,7 +22,7 @@ export class EmployeeService {
     loadEmployees() : Observable<Employee[]> {
       const url = `${this.employeeUriPrefix}`;
       // return new Observable((observable: Observer<Employee[]>)=>{
-      //   observable.next([{eid: 1, name: "abcd"}]);
+      //   observable.next([{_id: 1, name: "abcd"}]);
       // });
       return this.httpService.callServer(url, HttpMethods.GET);
     }

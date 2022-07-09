@@ -1,4 +1,4 @@
 export interface BaseModel {
-    eid?: number;
+    _id?: any;
     version?: number;
 }

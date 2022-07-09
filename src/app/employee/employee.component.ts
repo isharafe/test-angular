@@ -33,11 +33,10 @@ export class EmployeeComponent implements OnInit {
     });
   }
 
-  loadEmployee(param: string | null): void {
-    if (!param || param == 'new') {
+  loadEmployee(empId: string | null): void {
+    if (!empId || empId == 'new') {
       this.employee = {};
     } else {
-      const empId = +param;
       this.employeeService.loadEmployee(empId).subscribe((emp) => {
         this.employee = emp;
       });
