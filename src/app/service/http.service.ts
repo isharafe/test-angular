@@ -21,6 +21,8 @@ export class HttpService {
             return this.httpClient.get(serverUrl, {params: data});
         } else if (method == HttpMethods.POST) {
             return this.httpClient.post(serverUrl, data);
+        } else if (method == HttpMethods.PUT) {
+            return this.httpClient.put(serverUrl, data);
         }
 
         throw new Error(`Invalid http method: ${method}`);

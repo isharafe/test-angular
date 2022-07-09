@@ -28,6 +28,11 @@ export class EmployeeService {
     }
 
     save(employee: Employee) : Observable<Employee> {
+      if(employee._id) {
+        const url = `${this.employeeUriPrefix}/${employee._id}`;
+        return this.httpService.callServer(url, HttpMethods.PUT, employee);
+      }
+
       const url = `${this.employeeUriPrefix}`;
       return this.httpService.callServer(url, HttpMethods.POST, employee);
     }

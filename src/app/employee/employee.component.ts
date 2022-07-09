@@ -10,7 +10,7 @@ import { EmployeeService } from '../service/employee.service';
   styleUrls: ['./employee.component.css'],
 })
 export class EmployeeComponent implements OnInit {
-  employee!: Employee;
+  employee: Employee = {};
   formGroup!: FormGroup;
 
   constructor(
